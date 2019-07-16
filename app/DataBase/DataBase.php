@@ -37,8 +37,12 @@ class DataBase{
         $this->persist($entity);
 
         if(!is_null($data)){
+            if(!isset($data["id"]) || is_null($data["id"])){
+                $data["id"] = time();
+            }
             $this->db[$entity][] = $data;
             $this->commit();
+            return $data;
         }else{
             throw new Exception("Impossível inserir registro nulo.");
         }
@@ -89,7 +93,7 @@ class DataBase{
 
     public function update($entity, $data){
         $dataArray = $this->db[$entity];
-
+        
         for ($i = 0; $i < sizeof($dataArray); $i++) {
             if($dataArray[$i]["id"] == $data["id"]){
                 foreach($data as $field => $value){
@@ -98,6 +102,8 @@ class DataBase{
             }
         }
 
+        $this->db[$entity] = $dataArray;
         $this->commit();
+        // return $data;
     }
 }
