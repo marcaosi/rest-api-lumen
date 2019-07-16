@@ -4,19 +4,19 @@ namespace App\DataBase;
 class DataBase{
     private $uriDB;
     private $db;
-    private $instance;
+    private static $instance;
 
     private function __construct($uriDB){
         $this->uriDB = $uriDB;
         $this->db = json_decode(file_get_contents($this->uriDB), true);
     }
 
-    public static function getInstance($uriDB){
-        if(is_null($this->instance)){
-            $this->instance = new DataBase($uriDB);
+    public static function getInstance($uriDB = "../database/db.json"){
+        if(is_null(self::$instance) || !isset(self::$instance)){
+            self::$instance = new DataBase($uriDB);
         }
 
-        return $this->instance;
+        return self::$instance;
     }
 
     private function rollback(){
@@ -27,5 +27,77 @@ class DataBase{
         file_put_contents($this->uriDB, json_encode($this->db));
     }
 
-    
+    private function persist($entity){
+        if(!isset($this->db[$entity]) || !is_array($this->db[$entity])) {
+            $this->db[$entity] = array();
+        }
+    }
+
+    public function insert($entity, $data){
+        $this->persist($entity);
+
+        if(!is_null($data)){
+            $this->db[$entity][] = $data;
+            $this->commit();
+        }else{
+            throw new Exception("Impossível inserir registro nulo.");
+        }
+    }
+
+    public function getById($entity, $id){
+        $data = $this->db[$entity];
+        $find = null;
+        foreach($data as $el){
+            if($el["id"] == $id){
+                $find = $el;
+            }
+        }
+
+        return $find;
+    }
+
+    public function get($entity, $params){
+        $data = $this->db[$entity];
+        $find = array();
+        foreach($data as $el){
+            $equal = true;
+            foreach ($params as $param => $value) {
+                if($el[$param] != $value){
+                    $equal = false;
+                }
+            }
+            if($equal){
+                $find[] = $el;
+            }
+        }
+
+        return $find;
+    }
+
+    public function delete($entity, $id){
+        $data = $this->db[$entity];
+        $newData = array();
+        foreach ($data as $el) {
+            if($el["id"] != $id){
+                $newData[] = $el;
+            }
+        }
+
+        $this->db[$entity] = $newData;
+        $this->commit();
+    }
+
+    public function update($entity, $data){
+        $dataArray = $this->db[$entity];
+
+        for ($i = 0; $i < sizeof($dataArray); $i++) {
+            if($dataArray[$i]["id"] == $data["id"]){
+                foreach($data as $field => $value){
+                    $dataArray[$i][$field] = $value;
+                }
+            }
+        }
+
+        $this->commit();
+    }
 }
