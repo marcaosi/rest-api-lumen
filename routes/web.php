@@ -11,4 +11,7 @@
 |
 */
 
-$router->get('/', "SeriesController@get");
+$router->get('/series[/{id}]', "SeriesController@get");
+$router->post('/series', "SeriesController@post");
+$router->put('/series/{id}', "SeriesController@put");
+$router->delete('/series/{id}', "SeriesController@delete");
