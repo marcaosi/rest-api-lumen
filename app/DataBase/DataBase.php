@@ -49,6 +49,8 @@ class DataBase{
     }
 
     public function getById($entity, $id){
+        $this->persist($entity);
+
         $data = $this->db[$entity];
         $find = null;
         foreach($data as $el){
@@ -61,6 +63,8 @@ class DataBase{
     }
 
     public function get($entity, $params){
+        $this->persist($entity);
+
         $data = $this->db[$entity];
         $find = array();
         foreach($data as $el){
@@ -79,6 +83,8 @@ class DataBase{
     }
 
     public function delete($entity, $id){
+        $this->persist($entity);
+
         $data = $this->db[$entity];
         $newData = array();
         foreach ($data as $el) {
@@ -92,6 +98,8 @@ class DataBase{
     }
 
     public function update($entity, $data){
+        $this->persist($entity);
+        
         $dataArray = $this->db[$entity];
         
         for ($i = 0; $i < sizeof($dataArray); $i++) {
