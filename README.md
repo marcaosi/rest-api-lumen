@@ -1,7 +1,3 @@
 # rest-api-lumen
-Exemplo de API REST desenvolvida em LUMEN PHP
+Esta api é desenvolvida utilizando o micro-framework lumen. O objetivo dela é ser um exemplo de api.
 
-
-Esta API terá, quando pronta, dois endpoints: series e genres.
-
-Gerenciará as entidades de séries e gêneros para gerenciar as séries que um usuário assisti.
