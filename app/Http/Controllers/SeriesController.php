@@ -22,11 +22,13 @@ class SeriesController extends Controller
      * Params @id
      * 
      */
-    public function get($id = null){
+    public function get(Request $request, $id = null){
         $db = new SerieDataBase();
-
+        
+        $params = $request->query();
+        
         if(is_null($id)){
-            return $db->get($id);
+            return $db->get($params);
         }else {
             return $db->getById($id);
         }

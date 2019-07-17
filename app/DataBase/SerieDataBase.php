@@ -19,7 +19,7 @@ class SerieDataBase{
 
     private function validate($serie){
         foreach ($this->fieldsNotNull as $field) {
-            if(!isset($serie[$field]) || empty($serie[$field])) throw new Exception("Informe todos os campos obrigatórios.");
+            if(!isset($serie[$field]) || empty($serie[$field])) throw new Exception("Informe todos os campos obrigatï¿½rios.");
         }
     }
 
@@ -27,7 +27,7 @@ class SerieDataBase{
         $params = $this->fieldsNotNull;
         $params[] = "id";
         foreach ($params as $field) {
-            if(!isset($serie[$field]) || empty($serie[$field])) throw new Exception("Informe todos os campos obrigatórios.");
+            if(!isset($serie[$field]) || empty($serie[$field])) throw new Exception("Informe todos os campos obrigatï¿½rios.");
         }
     }
 
@@ -44,7 +44,7 @@ class SerieDataBase{
     }
 
     public function get($params = null){
-        return $this->database->get($this->entity, []);
+        return $this->database->get($this->entity, $params);
     }
 
     public function delete($id){
