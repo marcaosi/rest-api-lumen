@@ -23,15 +23,8 @@ class GenresController extends Controller
      * 
      */
     public function get(Request $request, $id = null){
-        $db = new GenreDataBase();
-        
-        $params = $request->query();
-        
-        if(is_null($id)){
-            return $db->get($params);
-        }else {
-            return $db->getById($id);
-        }
+        $genres = \App\Genre::all();
+        return $genres;
     }
 
     /**
@@ -40,28 +33,31 @@ class GenresController extends Controller
      * 
      */
     public function post(Request $request){
-        $Genre = json_decode($request->getContent(), true);
+        $genre = new \App\Genre();
 
-        $db = new GenreDataBase();
+        $genre->name = $request->name;
+        $genre->save();
 
-        return $db->insert($Genre);
+        return $genre;
     }
 
     /**
      * Route DELETE
      */
     public function delete($id){
-        $db = new GenreDataBase();
-        $db->delete($id);
+        $genre = \App\Genre::find($id);
+        $genre->delete();
     }
 
     /**
      * Route PUT
      */
     public function put(Request $request, $id){
-        $Genre = json_decode($request->getContent(), true);
-        $Genre["id"] = $id;
-        $db = new GenreDataBase();
-        return $db->update($Genre);
+        $genre = \App\Genre::find($id);
+
+        $genre->name = $request->name;
+        $genre->save();
+        
+        return $genre;
     }
 }
