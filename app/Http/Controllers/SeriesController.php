@@ -23,15 +23,8 @@ class SeriesController extends Controller
      * 
      */
     public function get(Request $request, $id = null){
-        $db = new SerieDataBase();
-        
-        $params = $request->query();
-        
-        if(is_null($id)){
-            return $db->get($params);
-        }else {
-            return $db->getById($id);
-        }
+        $series = \App\Serie::all();
+        return $series;
     }
 
     /**
@@ -40,11 +33,15 @@ class SeriesController extends Controller
      * 
      */
     public function post(Request $request){
-        $serie = json_decode($request->getContent(), true);
 
-        $db = new SerieDataBase();
+        $serie = new \App\Serie();
 
-        return $db->insert($serie);
+        $serie->name = $request->name;
+        $serie->resume = $request->resume;
+
+        $serie->save();
+
+        return $serie;
     }
 
     /**
