@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Serie extends Model
+class Genre extends Model
 {
 
     /**
@@ -13,12 +13,12 @@ class Serie extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'resume', 'genre_id'
+        'name'
     ];
     
     public $timestamp = false;
 
-    public function genre(){
-        return $this->belongsTo(Genre::class);
+    public function series(){
+        return $this->hasMany(Serie::class);
     }
 }

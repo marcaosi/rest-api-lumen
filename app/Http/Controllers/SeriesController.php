@@ -48,17 +48,21 @@ class SeriesController extends Controller
      * Route DELETE
      */
     public function delete($id){
-        $db = new SerieDataBase();
-        $db->delete($id);
+        $serie = \App\Serie::find($id);
+        $serie->delete();
     }
 
     /**
      * Route PUT
      */
     public function put(Request $request, $id){
-        $serie = json_decode($request->getContent(), true);
-        $serie["id"] = $id;
-        $db = new SerieDataBase();
-        return $db->update($serie);
+        $serie = \App\Serie::find($id);
+
+        $serie->name = $request->name;
+        $serie->resume = $request->resume;
+
+        $serie->save();
+
+        return $serie;
     }
 }

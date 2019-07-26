@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSeriesTable extends Migration
+class CreateSerie extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +15,12 @@ class CreateSeriesTable extends Migration
     {
         Schema::create('series', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string("name");
-            $table->string("resume");
             $table->timestamps();
+            $table->string("name")->unique();
+            $table->string("resume");
+            $table->tinyInteger("genre_id");
+
+            $table->foreign("genre_id")->references("id")->on("genres");
         });
     }
 
