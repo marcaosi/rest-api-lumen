@@ -38,6 +38,7 @@ class SeriesController extends Controller
 
         $serie->name = $request->name;
         $serie->resume = $request->resume;
+        $serie->genre_id = $request->genre_id;
 
         $serie->save();
 
@@ -60,6 +61,7 @@ class SeriesController extends Controller
 
         $serie->name = $request->name;
         $serie->resume = $request->resume;
+        $serie->genre_id = $request->genre_id;
 
         $serie->save();
 
