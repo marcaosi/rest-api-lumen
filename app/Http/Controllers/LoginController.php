@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use \Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Hash;
+use Firebase\JWT\JWT;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -16,21 +18,31 @@ class LoginController extends Controller
         //
     }
 
-    public function login(){
-        $dados = json_decode($request->getContent(), true);
-
-        if($dados["username"] == "marcaosi" && $dados["password"] == "123456"){
-            $key = "rest-api-lumen";
-
-            $token = [
-                "username" => "marcaosi",
-                "password" => "marcao1996",
-                "id" => "1"
-            ];
-
-            return JWT::encode($token, $key);
-        }else{
-            throw new Exception("Dados inválidos.");
+    public function login(Request $request){
+        $this->validate($request, [
+            "email" => "required|email",
+            "password" => "required"
+        ]);
+        try{
+            $user = \App\User::where("email", $request->email)->first();
+    
+            if(is_null($user) || !Hash::check($request->password, $user->password)){
+                throw new \Exception();
+            }
+    
+            $token = JWT::encode(
+                ["email" => $request->email],
+                env("KEY_TOKEN")
+            );
+    
+            return response(
+                ["token" => $token]
+            );
+        }catch(\Exception $ex){
+            return response(
+                ["Não autorizado."],
+                403
+            );
         }
     }
 
