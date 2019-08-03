@@ -8,4 +8,10 @@ class GenresController extends BaseController
     {
         $this->class = \App\Genre::class;
     }
+
+    protected function getArrayValidate(){
+        return [
+            "name" => "required|string"
+        ];
+    }
 }

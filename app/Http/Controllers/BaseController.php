@@ -11,7 +11,10 @@ abstract class BaseController extends Controller{
         return $resources;
     }
 
+    abstract protected function getArrayValidate();
+
     public function post(Request $request){
+        $this->validate($request, $this->getArrayValidate());
 
         $resource = new $this->class;
 
@@ -35,6 +38,8 @@ abstract class BaseController extends Controller{
     }
 
     public function put(Request $request, $id){
+        $this->validate($request, $this->getArrayValidate());
+
         $resource = $this->class::find($id);
 
         $resource->fill($request->all());
