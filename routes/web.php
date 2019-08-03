@@ -15,10 +15,16 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->post('/series', "SeriesController@post");
     $router->put('/series/{id}', "SeriesController@put");
     $router->delete('/series/{id}', "SeriesController@delete");
+    $router->get('/series/{id}/episodes', "EpisodesController@getBySerie");
 
     $router->get('/genres[/{id}]', "GenresController@get");
     $router->post('/genres', "GenresController@post");
     $router->put('/genres/{id}', "GenresController@put");
     $router->delete('/genres/{id}', "GenresController@delete");
+
+    $router->get('/episodes[/{id}]', "EpisodesController@get");
+    $router->post('/episodes', "EpisodesController@post");
+    $router->put('/episodes/{id}', "EpisodesController@put");
+    $router->delete('/episodes/{id}', "EpisodesController@delete");
 });
 $router->post('/login', "LoginController@login");
