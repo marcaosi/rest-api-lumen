@@ -14,7 +14,7 @@ class CreateGenre extends Migration
     public function up()
     {
         Schema::create('genres', function (Blueprint $table) {
-            $table->tinyIncrements('id');
+            $table->bigIncrements('id');
             $table->timestamps();
             $table->string("name")->unique();
         });

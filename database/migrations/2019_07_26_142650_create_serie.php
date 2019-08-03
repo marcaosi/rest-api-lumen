@@ -18,7 +18,7 @@ class CreateSerie extends Migration
             $table->timestamps();
             $table->string("name")->unique();
             $table->string("resume");
-            $table->tinyInteger("genre_id");
+            $table->bigInteger("genre_id")->unsigned();
 
             $table->foreign("genre_id")->references("id")->on("genres");
         });
