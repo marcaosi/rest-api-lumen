@@ -31,6 +31,8 @@ class Autenticador
             if(is_null($user)){
                 throw new \Exception();
             }
+
+            $request->user = $user;
             
             return $next($request);
         }catch(\Exception $ex){
