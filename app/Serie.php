@@ -15,10 +15,20 @@ class Serie extends Model
     protected $fillable = [
         'name', 'resume', 'genre_id', 'user_id'
     ];
+    protected $appends = [
+        "links"
+    ];
     
     public $timestamp = false;
 
     public function genre(){
         return $this->belongsTo(Genre::class);
+    }
+
+    public function getLinksAttribute() : Array{
+        return [
+            "episodes" => "/serie/{$this->id}/episodes",
+            "self" => "/serie/{$this->id}"
+        ];
     }
 }

@@ -15,10 +15,20 @@ class Genre extends Model
     protected $fillable = [
         'name'
     ];
+    protected $appends = [
+        "links"
+    ];
     
     public $timestamp = false;
 
     public function series(){
         return $this->hasMany(Serie::class);
+    }
+
+    public function getLinksAttribute(){
+        return [
+            "self" => "/genres/{$this->id}",
+            "series" => "/genres/{$this->id}/series"
+        ];
     }
 }

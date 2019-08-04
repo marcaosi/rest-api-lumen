@@ -13,10 +13,21 @@ class Episode extends Model
     protected $fillable = [
         'name', 'season', 'description', 'serie_id', 'number'
     ];
+
+    protected $appends = [
+        'links'
+    ];
     
     public $timestamp = true;
 
     public function genre(){
         return $this->belongsTo(Serie::class);
+    }
+
+    public function getLinksAttribute() : Array{
+        return [
+            "serie" => '/series/' . $this->id,
+            "self" => '/episodes/' . $this->id
+        ];
     }
 }
