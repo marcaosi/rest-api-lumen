@@ -13,7 +13,7 @@ class Serie extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'resume', 'genre_id'
+        'name', 'resume', 'genre_id', 'user_id'
     ];
     
     public $timestamp = false;

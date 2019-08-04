@@ -12,7 +12,8 @@ class SeriesController extends BaseController
         return [
             "name" => "required|string",
             "resume" => "required",
-            "genre_id" => "required|int"
+            "genre_id" => "required|int",
+            "user_id" => "required|int"
         ];
     }
 }
