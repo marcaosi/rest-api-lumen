@@ -20,7 +20,7 @@ class Episode extends Model
     
     public $timestamp = true;
 
-    public function genre(){
+    public function serie(){
         return $this->belongsTo(Serie::class);
     }
 

@@ -25,10 +25,14 @@ class Serie extends Model
         return $this->belongsTo(Genre::class);
     }
 
+    public function episodes(){
+        return $this->hasMany(Episode::class);
+    }
+
     public function getLinksAttribute() : Array{
         return [
-            "episodes" => "/serie/{$this->id}/episodes",
-            "self" => "/serie/{$this->id}"
+            "episodes" => "/series/{$this->id}/episodes",
+            "self" => "/series/{$this->id}"
         ];
     }
 }

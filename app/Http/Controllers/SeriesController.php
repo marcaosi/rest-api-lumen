@@ -24,6 +24,6 @@ class SeriesController extends BaseController
         }else{
             $resources = $this->class::where("id", $id)->where("user_id", $request->user->id)->first();
         }
-        return $resources;
+        return response($resources);
     }
 }
