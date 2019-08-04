@@ -26,4 +26,21 @@ class EpisodesController extends BaseController
 
         return response($episodes, $code);
     }
+
+    public function get(Request $request, $id = null){
+        if(is_null($id)){
+            $resources = $this->class::select("episodes.*")
+                ->where("series.user_id", $request->user->id)
+                ->join('series', 'series.id', '=', 'episodes.serie_id')
+                ->paginate();
+        }else{
+            $resources = $this->class::where("episodes.id", $id)
+                ->where("series.user_id", $request->user->id)
+                ->join('series', 'series.id', '=', 'episodes.serie_id')
+                ->first();
+        }
+
+        $code = \is_null($resources)? 204 : 200;
+        return response($resources, $code);
+    }
 }

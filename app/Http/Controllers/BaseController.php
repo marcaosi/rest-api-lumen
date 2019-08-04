@@ -12,7 +12,8 @@ abstract class BaseController extends Controller{
         }else{
             $resources = $this->class::where("id", $id)->first();
         }
-        return $resources;
+        $code = \is_null($resources)? 204 : 200;
+        return response($resources, $code);
     }
 
     abstract protected function getArrayValidate();
