@@ -7,7 +7,11 @@ abstract class BaseController extends Controller{
     protected $class;
 
     public function get(Request $request, $id = null){
-        $resources = $this->class::paginate();
+        if(is_null($id)){
+            $resources = $this->class::paginate();
+        }else{
+            $resources = $this->class::where("id", $id)->first();
+        }
         return $resources;
     }
 
